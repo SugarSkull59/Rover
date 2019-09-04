@@ -2,22 +2,26 @@
 // ======================
 
       
-     var rover = {
+     let rover = {
         direction: "N",
         x: 0,
         y: 0,
         travelLog: [0,0],
       };
       
-      var instructions = "rffrffklfrffk"; 
+      let instructions = "rffrffklfrffk"; 
     
+      let obstacles = {
+        x: [4, 2],
+        y: [1, 3]
+    };
 
       const myGrid = [
    
         [rover,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,X,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,X,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0],
@@ -139,3 +143,17 @@
       }
       
       console.log(rover.travelLog);
+
+      
+      function checkObstacles() {
+        for (var j = 0; j < obstacles.x.length; j++) {
+            if (rover.position[0] === obstacles.x[j] && rover.position[1] === obstacles.y[j]) {
+                console.log("You can't move forward, there is an obstacle");
+                return true;
+    
+            } else {
+                return false;
+            }
+        }
+    }
+    
