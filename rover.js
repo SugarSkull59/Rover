@@ -132,7 +132,7 @@ function move(param, rover) {
     y = rover.position[1];
 
 
-    for (var i = 0; i < param.length; i++) {
+    for (let i = 0; i < param.length; i++) {
 
         if (checkObstacles() === false) {
 
@@ -187,7 +187,7 @@ function validationOfMovement() {
 y me de la última posición antes del obstaculo */
 function checkObstacles() {
 
-    for (var j = 0; j < obstacles.x.length; j++) {
+    for (let j = 0; j < obstacles.x.length; j++) {
         if (rover.position[0] === obstacles.x[j] && rover.position[1] === obstacles.y[j]) {
             console.log("You can't move forward, there is an obstacle");
             return true;
