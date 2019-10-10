@@ -16,19 +16,20 @@
         y: [1, 3]
     };
 
-      const myGrid = [
-   
-        [rover,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,X,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,X,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0]
-      ]
+     //    Esto es una matriz para yo ver como quedaría: r= rover; X = obstáculos; 0= espacios vacíos
+//   [r, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, X, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, X, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+
+// ======================
 
 
       function turnLeft(rover){
@@ -123,37 +124,78 @@
 
         }
       
-      // Usamos método charAt para que recorra las intrucciones 
-      for (var i = 0; i < instructions.length; i++) {
-        var inputLetter = instructions.charAt(i);
-        if (inputLetter != "r" && inputLetter != "f" && inputLetter != "l" && inputLetter != "b" ) {    
-        console.log("command is not valid !!!");
-        }else if (inputLetter == "r") {
-          turnRight(rover);
-        } else if (inputLetter == "f") {
-          moveForward(rover);
-        } else if (inputLetter == "l") {
-          turnLeft(rover);
-        } else if (inputLetter == "b") {
-            moveBackward(rover);
-        } else {
-          console.log("Houston! We have a problem."); 
-        }
-        console.log("The Rover's current position is: [" + rover.x + "," + rover.y + "]");
-      }
-      
-      console.log(rover.travelLog);
+/* Creamos una función  que recibe cuatro parámetros: forward, right, left y backward. Esta función es la que hace todo el movimiento de rover. 1º le paso x- y  que son posiciones; 2º bucle for para que recorrar el string, que corresponde al parámetro primero de función; 3º Un condicional con las distintas opciones; 4º La llamada a la función de validación; 5º El push para travelLog*/
 
-      
-      function checkObstacles() {
-        for (var j = 0; j < obstacles.x.length; j++) {
-            if (rover.position[0] === obstacles.x[j] && rover.position[1] === obstacles.y[j]) {
-                console.log("You can't move forward, there is an obstacle");
-                return true;
-    
+function move(param, rover) {
+
+    x = rover.position[0];
+    y = rover.position[1];
+
+
+    for (var i = 0; i < param.length; i++) {
+
+        if (checkObstacles() === false) {
+
+
+            if (param[i] === "f") {
+                moveForward(rover);
+
+            } else if (param[i] === "l") {
+                turnLeft(rover);
+
+            } else if (param[i]) {
+                turnRight(rover);
+
+            } else if (param[i] === "b") {
+                moveBackward(rover);
+
             } else {
-                return false;
+                console.log("That movement is not valid");
             }
         }
+        validationOfMovement();
+
     }
+
+}
+
+
+
+/* Esta función lo que hace es provocar que no se salga de la cuadrícula de 10*10 */
+function validationOfMovement() {
+    x = rover.position[0];
+    y = rover.position[1];
+
+
+
+    if ((x >= 0) && (x <= 10) && (y >= 0) && (y <= 10)) {
+
+        console.log(`The movement is correct. Final Position ${rover.position}`);
+
+        rover.travelLog.push(`[ ${rover.position[0]}  ,  ${ rover.position[1]} ]`);
+        console.log(rover.travelLog);
+
+    } else {
+        return "The movement is wrong"
+
+    }
+}
+
+
+
+/* Función para comprobar que hay obstaculos, le puse los dos return para que en el caso de encontrar un obstaculo, se salga
+y me de la última posición antes del obstaculo */
+function checkObstacles() {
+
+    for (var j = 0; j < obstacles.x.length; j++) {
+        if (rover.position[0] === obstacles.x[j] && rover.position[1] === obstacles.y[j]) {
+            console.log("You can't move forward, there is an obstacle");
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+}
+
     
